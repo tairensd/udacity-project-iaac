@@ -237,10 +237,12 @@ Resources:
         Fn::Base64: !Sub |
           #!/bin/bash
           apt-get update -y
+          apt-get install unzip awscli -y
           apt-get install apache2 -y
           systemctl start apache2.service
           cd /var/www/html
-          wget https://project-udacity-iaac.s3.eu-west-2.amazonaws.com/index.html
+          aws s3 cp s3://project-udacity-iaac/index.zip .
+          unzip -o index.zip
       ImageId: ami-0ff4c8fb495a5a50d
       SecurityGroups:
         - Ref: WebServerSecGroup
