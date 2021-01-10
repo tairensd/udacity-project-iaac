@@ -3,4 +3,4 @@ Udacity project - deploy web servers for a highly available web app using CloudF
 
 https://github.com/tairensd/udacity-project-iaac
 
-http://Proje-WebAp-P9W55ZF1RJ3J-1090824782.eu-west-2.elb.amazonaws.com
+http://proje-webap-1s14dnxb17hxw-632546492.eu-west-2.elb.amazonaws.com/
