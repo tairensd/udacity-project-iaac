@@ -35,6 +35,7 @@ Resources:
   ProfileWithRolesForOurApp:
     Type: AWS::IAM::InstanceProfile
     Properties:
+      InstanceProfileName: "ProfileWithRolesForOurApp"
       Roles:
         - UdacityS3ReadOnlyEC2
 
@@ -224,6 +225,10 @@ Resources:
           FromPort: 80
           ToPort: 80
           CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 0.0.0.0/0
       SecurityGroupEgress:
         - IpProtocol: tcp
           FromPort: 0
@@ -241,12 +246,13 @@ Resources:
           apt-get install apache2 -y
           systemctl start apache2.service
           cd /var/www/html
-          aws s3 cp s3://project-udacity-iaac/index.zip .
+          wget https://project-udacity-iaac.s3.eu-west-2.amazonaws.com/index.zip
           unzip -o index.zip
       ImageId: ami-0ff4c8fb495a5a50d
       SecurityGroups:
         - Ref: WebServerSecGroup
       InstanceType: t3.small
+      IamInstanceProfile: "ProfileWithRolesForOurApp"
       BlockDeviceMappings:
         - DeviceName: "/dev/sdk"
           Ebs:
@@ -259,8 +265,8 @@ Resources:
         - !Join [ ",", [ !Ref PrivateSubnet1, !Ref PrivateSubnet2 ]]
       LaunchConfigurationName:
         Ref: WebAppLaunchConfig
-      MinSize: "2"
-      MaxSize: "2"
+      MinSize: "4"
+      MaxSize: "4"
       TargetGroupARNs:
         - Ref: WebAppTargetGroup
 
